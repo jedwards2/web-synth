@@ -1,0 +1,22 @@
+.music-block {
+  width: 85%;
+  height: 50%;
+  border-radius: 1vh;
+  border: black 0.25vh solid;
+}
+
+.on {
+  background-color: orange;
+}
+
+.off {
+  background-color: lightblue;
+}
+
+.border-on {
+  border: orange 0.25vh solid;
+}
+
+.border-off {
+  border: black 0.25vh solid;
+}

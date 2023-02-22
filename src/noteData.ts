@@ -1,0 +1,28 @@
+let noteData = [
+  { name: "C3", num: "48", frq: 130.8128 },
+  { name: "C#3", num: "49", frq: 138.5913 },
+  { name: "D3", num: "50", frq: 146.8324 },
+  { name: "D#3", num: "51", frq: 155.5635 },
+  { name: "E3", num: "52", frq: 164.8138 },
+  { name: "F3", num: "53", frq: 174.6141 },
+  { name: "F#3", num: "54", frq: 184.9972 },
+  { name: "G3", num: "55", frq: 195.9977 },
+  { name: "G#3", num: "56", frq: 207.6523 },
+  { name: "A3", num: "57", frq: 220 },
+  { name: "A#3", num: "58", frq: 233.0819 },
+  { name: "B3", num: "59", frq: 246.9417 },
+  { name: "C4", num: "60", frq: 261.6256 },
+  { name: "C#4", num: "61", frq: 277.1826 },
+  { name: "D4", num: "62", frq: 293.6648 },
+  { name: "D#4", num: "63", frq: 311.127 },
+  { name: "E4", num: "64", frq: 329.6276 },
+  { name: "F4", num: "65", frq: 349.2282 },
+  { name: "F#4", num: "66", frq: 369.9944 },
+  { name: "G4", num: "67", frq: 391.9954 },
+  { name: "G#4", num: "68", frq: 415.3047 },
+  { name: "A4", num: "69", frq: 440 },
+  { name: "A#4", num: "70", frq: 466.1638 },
+  { name: "B4", num: "71", frq: 493.8833 },
+];
+
+export default noteData;

@@ -1,0 +1,17 @@
+.column {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  gap: 5%;
+  margin: 0.5vw 0px;
+  margin-left: 0.5vw;
+  border-radius: 1vh;
+}
+
+.column-on {
+  background-color: darkgray;
+}
+
+.column-off {
+  background-color: transparent;
+}

@@ -1,0 +1,9 @@
+.grid {
+  display: flex;
+  flex-direction: row;
+  background-color: lightgray;
+  border: 0.25vh solid black;
+  border-radius: 1vh;
+  margin: 0.5vw;
+  width: 80%;
+}

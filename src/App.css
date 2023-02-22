@@ -1,38 +1,85 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  background-image: linear-gradient(red, darkorange);
+  height: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+.synthesizer-div {
+  background-color: orange;
+  border-radius: 1vh;
+  border: black 0.25vh solid;
+  width: 80%;
+  height: 80%;
+  max-width: 50%;
+  min-height: 500px;
+  overflow: hidden;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.synth-header {
+  gap: 1%;
+  margin: 1%;
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  height: 15%;
+  align-items: center;
+  font-size: 1vw;
+}
+
+.button-div {
+  background-color: lightgray;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1vh;
+  border: 0.25vh solid black;
+}
+
+.buttonImg {
+  width: 2vw;
+  height: 3vh;
+}
+
+.noteset-columns {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+}
+
+.bottom-row {
+  display: flex;
+  height: 50%;
+}
+
+.piano--div {
+  border: 1px solid black;
+  margin: 10px;
+  height: 30%;
+  display: flex;
+  max-width: 900px;
+}
+
+.piano--div div:first-child {
+  border-left: none;
+}
+
+.percentage--input {
+  width: 3em;
+}
+
+.tempo--div {
+  display: flex;
+  flex-direction: column;
 }

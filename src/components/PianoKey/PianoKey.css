@@ -1,0 +1,42 @@
+.white,
+.black {
+  position: relative;
+  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0.5vw 0;
+}
+
+.white:hover {
+  background-color: lightblue;
+}
+
+.black:hover {
+  background-color: lightblue;
+}
+
+.white {
+  height: 92%;
+  width: 5vw;
+  z-index: 1;
+  border-right: 1px solid black;
+}
+
+.black {
+  height: 70%;
+  width: 2vw;
+  margin: 0 0 0 -0.3vw;
+  z-index: 2;
+  border: 1px solid black;
+  background-color: black;
+}
+
+.offset {
+  margin: 0 0 0 -1vw;
+}
+
+.key {
+  height: 100%;
+  width: 5%;
+}

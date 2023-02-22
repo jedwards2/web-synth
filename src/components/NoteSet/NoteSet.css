@@ -1,0 +1,22 @@
+.noteset-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 25%;
+  gap: 5%;
+}
+
+.selected {
+  background-color: orange;
+}
+
+.not-selected {
+  background-color: lightgray;
+}
+
+.noteset-name {
+  background-color: lightgray;
+  padding: 2.5%;
+  border-radius: 5px;
+  width: 25%;
+}
