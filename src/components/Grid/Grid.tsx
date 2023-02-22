@@ -1,7 +1,7 @@
 import Column from "../Column/Column";
 import "./Grid.css";
 
-function Grid({ gridState, setBlock }: any) {
+const Grid = ({ gridState, setBlock }: any) => {
   const columns = gridState.map((array: any, idx: number) => {
     return (
       <Column
@@ -13,6 +13,6 @@ function Grid({ gridState, setBlock }: any) {
   });
 
   return <div className="grid">{columns}</div>;
-}
+};
 
 export default Grid;

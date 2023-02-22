@@ -6,11 +6,9 @@ import NoteSet from "./components/NoteSet/NoteSet";
 // import DistortionSlider from "./components/DistortionSlider";
 // import ReverbSlider from "./components/ReverbSlider";
 import PianoKey from "./components/PianoKey/PianoKey";
-import play from "./images/play.png";
-import pause from "./images/pause.png";
 import noteData from "./noteData";
 
-function App() {
+const App = () => {
   // const [count, setCount] = useState(0);
   const [running, setRunning] = useState(false);
   const [currentRow, setCurrentRow] = useState([true, false, false, false]);
@@ -64,17 +62,12 @@ function App() {
       { state: false, id: 31, note: "C3", borderActive: false },
     ],
   ]);
-  const [synth, setSynth] = useState();
-  const [distAmount, setDistAmount] = useState(0.5);
-  const [reverbAmount, setReverbAmount] = useState(0.99);
 
-  useEffect(() => {
-    // eslint-disable-next-line
-  }, [reverbAmount, distAmount]);
+  useEffect(() => {}, []);
 
   useEffect(() => {});
 
-  function setBlock(id: number) {
+  const setBlock = (id: number) => {
     setGridState((prevState) => {
       const newState = [];
       for (let i = 0; i < prevState.length; i++) {
@@ -95,9 +88,9 @@ function App() {
       }
       return newState;
     });
-  }
+  };
 
-  function updateNote(value: any) {
+  const updateNote = (value: any) => {
     let row = currentRow.indexOf(true);
 
     setGridState((prevState) => {
@@ -120,7 +113,7 @@ function App() {
       }
       return newState;
     });
-  }
+  };
 
   const switchRunning = () => {
     setRunning((prevState) => !prevState);
@@ -146,14 +139,15 @@ function App() {
   return (
     <div className="App">
       <div className="synthesizer-div">
+        <div className="piano--div">{keys}</div>
         <div className="synth-header">
           <h1>Sequencer</h1>
           <div onClick={switchRunning} className="button-div">
-            {running ? (
-              <img src={pause} alt="pause" className="buttonImg"></img>
-            ) : (
-              <img src={play} alt="play" className="buttonImg"></img>
-            )}
+            <img
+              src={running ? "images/pause.png" : "images/play.png"}
+              alt="pause"
+              className="buttonImg"
+            ></img>
           </div>
           <h2>Tempo</h2>
           {/* <TempoSlider />
@@ -169,10 +163,9 @@ function App() {
           /> */}
         </div>
         <div className="bottom-row">
-          <Grid gridState={gridState} setBlock={setBlock} synth={synth} />
+          <Grid gridState={gridState} setBlock={setBlock} />
           <div className="noteset-columns">{noteSets}</div>
         </div>
-        <div className="piano--div">{keys}</div>
       </div>
       <div className="footer">
         <p>created by</p>
@@ -180,6 +173,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;

@@ -1,6 +1,6 @@
 import "./NoteSet.css";
 
-function NoteSet({ setCurrentRow, rowState, rowNumber, currentNote }: any) {
+const NoteSet = ({ setCurrentRow, rowState, rowNumber, currentNote }: any) => {
   return (
     <div className="noteset-row">
       <div
@@ -16,6 +16,6 @@ function NoteSet({ setCurrentRow, rowState, rowNumber, currentNote }: any) {
       <div className="noteset-name">{currentNote}</div>
     </div>
   );
-}
+};
 
 export default NoteSet;

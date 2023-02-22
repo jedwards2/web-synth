@@ -1,6 +1,6 @@
 import "./PianoKey.css";
 
-function PianoKey({ note, updateNote }: any) {
+const PianoKey = ({ note, updateNote }: any) => {
   let offsetNote =
     (note.name.includes("D") && !note.name.includes("#")) ||
     (note.name.includes("E") && !note.name.includes("#")) ||
@@ -22,6 +22,6 @@ function PianoKey({ note, updateNote }: any) {
       ></div>
     </div>
   );
-}
+};
 
 export default PianoKey;

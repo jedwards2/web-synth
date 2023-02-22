@@ -1,7 +1,7 @@
 import "./MusicBlock.css";
 import { useEffect } from "react";
 
-function MusicBlock({ blockState, setBlock, playNote, synth }: any) {
+const MusicBlock = ({ blockState, setBlock, playNote, synth }: any) => {
   useEffect(() => {
     if (blockState.state && blockState.borderActive && synth) {
       playNote(blockState.note, synth);
@@ -17,6 +17,6 @@ function MusicBlock({ blockState, setBlock, playNote, synth }: any) {
       onClick={() => setBlock(blockState.id)}
     ></div>
   );
-}
+};
 
 export default MusicBlock;
