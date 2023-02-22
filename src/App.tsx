@@ -1,15 +1,14 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { createDevice } from "@rnbo/js";
 import Grid from "./components/Grid/Grid";
 import NoteSet from "./components/NoteSet/NoteSet";
-// import TempoSlider from "./components/TempoSlider";
-// import DistortionSlider from "./components/DistortionSlider";
-// import ReverbSlider from "./components/ReverbSlider";
 import PianoKey from "./components/PianoKey/PianoKey";
+import Slider from "@mui/material/Slider";
 import noteData from "./noteData";
 
 const App = () => {
-  // const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
   const [running, setRunning] = useState(false);
   const [currentRow, setCurrentRow] = useState([true, false, false, false]);
   const [gridState, setGridState] = useState([
@@ -63,9 +62,65 @@ const App = () => {
     ],
   ]);
 
-  useEffect(() => {}, []);
+  const [volume, setVolume] = useState(0.5);
+  const [tempo, setTempo] = useState(70);
+  const [quality, setQuality] = useState(50);
 
-  useEffect(() => {});
+  let context = useRef(new AudioContext());
+
+  useEffect(() => {
+    audioSetup();
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (running) {
+        setCount((prevCount) => prevCount + 1);
+
+        setGridState((prevState) => {
+          let index = count % prevState.length;
+          let nextIndex = (count + 1) % prevState.length;
+          let newState = [...prevState];
+          let newNextState = newState[nextIndex].map((obj) => {
+            let newObj = { ...obj };
+            newObj.borderActive = !newObj.borderActive;
+            return newObj;
+          });
+
+          newState[nextIndex] = newNextState;
+
+          let currentIndexedState = newState[index].map((obj) => {
+            let newObj2 = { ...obj };
+            newObj2.borderActive = !newObj2.borderActive;
+            return newObj2;
+          });
+
+          newState[index] = currentIndexedState;
+
+          return newState;
+        });
+      }
+    }, 250);
+    // clearing interval
+    return () => clearInterval(timer);
+  });
+
+  const audioSetup = async () => {
+    let rawPatcher = await fetch("exports/main.export.json");
+
+    let patcher = await rawPatcher.json();
+
+    const device = await createDevice({ context: context.current, patcher });
+    device.node.connect(context.current.destination);
+  };
+
+  const onOffSwitch = async () => {
+    if (running) {
+      await context.current.suspend().then(() => setRunning(false));
+    } else {
+      await context.current.resume().then(() => setRunning(true));
+    }
+  };
 
   const setBlock = (id: number) => {
     setGridState((prevState) => {
@@ -115,10 +170,6 @@ const App = () => {
     });
   };
 
-  const switchRunning = () => {
-    setRunning((prevState) => !prevState);
-  };
-
   const keys = noteData.map((note) => {
     return (
       <PianoKey note={note} updateNote={updateNote} currentRow={currentRow} />
@@ -136,13 +187,23 @@ const App = () => {
     );
   });
 
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setVolume(Number(e.target.value));
+  };
+
+  const handleTempoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTempo(Number(e.target.value));
+  };
+  const handleQualityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuality(Number(e.target.value));
+  };
+
   return (
     <div className="App">
       <div className="synthesizer-div">
         <div className="piano--div">{keys}</div>
         <div className="synth-header">
-          <h1>Sequencer</h1>
-          <div onClick={switchRunning} className="button-div">
+          <div onClick={onOffSwitch} className="button-div">
             <img
               src={running ? "images/pause.png" : "images/play.png"}
               alt="pause"
@@ -150,17 +211,51 @@ const App = () => {
             ></img>
           </div>
           <h2>Tempo</h2>
-          {/* <TempoSlider />
-          <h2>Distortion</h2>
-          <DistortionSlider
-            distAmount={distAmount}
-            setDistAmount={setDistAmount}
+          <Slider
+            size="small"
+            defaultValue={70}
+            aria-label="Small"
+            min={60}
+            max={100}
+            valueLabelDisplay="auto"
+            value={tempo}
+            onChange={(e) =>
+              handleTempoChange(
+                e as unknown as React.ChangeEvent<HTMLInputElement>
+              )
+            }
           />
-          <h2>Reverb</h2>
-          <ReverbSlider
-            reverbAmount={reverbAmount}
-            setReverbAmount={setReverbAmount}
-          /> */}
+          <h2>Volume</h2>
+          <Slider
+            size="small"
+            defaultValue={0.5}
+            aria-label="Small"
+            min={0}
+            max={1}
+            step={0.01}
+            valueLabelDisplay="auto"
+            value={volume}
+            onChange={(e) =>
+              handleVolumeChange(
+                e as unknown as React.ChangeEvent<HTMLInputElement>
+              )
+            }
+          />
+          <h2>Adjust Sound</h2>
+          <Slider
+            size="small"
+            defaultValue={50}
+            min={0}
+            max={100}
+            aria-label="Small"
+            valueLabelDisplay="auto"
+            value={quality}
+            onChange={(e) =>
+              handleQualityChange(
+                e as unknown as React.ChangeEvent<HTMLInputElement>
+              )
+            }
+          />
         </div>
         <div className="bottom-row">
           <Grid gridState={gridState} setBlock={setBlock} />
