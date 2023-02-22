@@ -9,7 +9,6 @@ const PianoKey = ({ note, updateNote }: any) => {
     (note.name.includes("B") && !note.name.includes("#"))
       ? true
       : false;
-
   return (
     <div className="key">
       <div
@@ -17,7 +16,7 @@ const PianoKey = ({ note, updateNote }: any) => {
           offsetNote ? "offset" : ""
         }`}
         onClick={() => {
-          updateNote(note.name);
+          updateNote(note);
         }}
       ></div>
     </div>

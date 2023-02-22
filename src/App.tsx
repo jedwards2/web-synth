@@ -64,9 +64,25 @@ const App = () => {
 
   const [volume, setVolume] = useState(0.5);
   const [tempo, setTempo] = useState(70);
-  const [quality, setQuality] = useState(50);
+  const [quality, setQuality] = useState(2);
 
   let context = useRef(new AudioContext());
+  let synthParams = useRef([
+    { value: 0 },
+    { value: 0 },
+    { value: 0 },
+    { value: 0 },
+  ]);
+  let noteParams = useRef([
+    { value: 0 },
+    { value: 0 },
+    { value: 0 },
+    { value: 0 },
+  ]);
+
+  let qualityParam = useRef({ value: 0 });
+
+  let volumeParam = useRef({ value: 0 });
 
   useEffect(() => {
     audioSetup();
@@ -112,6 +128,16 @@ const App = () => {
 
     const device = await createDevice({ context: context.current, patcher });
     device.node.connect(context.current.destination);
+
+    for (let i = 0; i < 4; i++) {
+      synthParams.current[i] = device.parametersById.get(`synth_${i}`);
+    }
+    for (let i = 0; i < 4; i++) {
+      noteParams.current[i] = device.parametersById.get(`note_${i}`);
+    }
+
+    qualityParam.current = device.parametersById.get("freq_mod");
+    volumeParam.current = device.parametersById.get("volume");
   };
 
   const onOffSwitch = async () => {
@@ -145,8 +171,10 @@ const App = () => {
     });
   };
 
-  const updateNote = (value: any) => {
+  const updateNote = (note: any) => {
     let row = currentRow.indexOf(true);
+    console.log(row);
+    noteParams.current[row].value = note.frq;
 
     setGridState((prevState) => {
       const newState = [];
@@ -157,7 +185,7 @@ const App = () => {
             column.push({
               state: prevState[i][q].state,
               id: prevState[i][q].id,
-              note: value,
+              note: note.name,
               borderActive: prevState[i][q].borderActive,
             });
           } else {
@@ -189,6 +217,7 @@ const App = () => {
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVolume(Number(e.target.value));
+    volumeParam.current.value = Number(e.target.value);
   };
 
   const handleTempoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -196,6 +225,7 @@ const App = () => {
   };
   const handleQualityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuality(Number(e.target.value));
+    qualityParam.current.value = Number(e.target.value);
   };
 
   return (
@@ -244,9 +274,9 @@ const App = () => {
           <h2>Adjust Sound</h2>
           <Slider
             size="small"
-            defaultValue={50}
-            min={0}
-            max={100}
+            defaultValue={2}
+            min={1}
+            max={10}
             aria-label="Small"
             valueLabelDisplay="auto"
             value={quality}
@@ -258,7 +288,11 @@ const App = () => {
           />
         </div>
         <div className="bottom-row">
-          <Grid gridState={gridState} setBlock={setBlock} />
+          <Grid
+            gridState={gridState}
+            setBlock={setBlock}
+            synthParams={synthParams}
+          />
           <div className="noteset-columns">{noteSets}</div>
         </div>
       </div>

@@ -1,15 +1,14 @@
 import MusicBlock from "../MusicBlock/MusicBlock";
 import "./Column.css";
 
-const Column = ({ columnState, setBlock, playNote, synth }: any) => {
+const Column = ({ columnState, setBlock, synthParams }: any) => {
   const blocks = columnState.map((obj: any, idx: number) => {
     return (
       <MusicBlock
         blockState={obj}
         setBlock={setBlock}
-        playNote={playNote}
         key={`obj + ${idx}`}
-        synth={synth}
+        synthParams={synthParams}
       ></MusicBlock>
     );
   });

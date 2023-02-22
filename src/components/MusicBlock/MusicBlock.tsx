@@ -1,10 +1,10 @@
 import "./MusicBlock.css";
 import { useEffect } from "react";
 
-const MusicBlock = ({ blockState, setBlock, playNote, synth }: any) => {
+const MusicBlock = ({ blockState, setBlock, synthParams }: any) => {
   useEffect(() => {
-    if (blockState.state && blockState.borderActive && synth) {
-      playNote(blockState.note, synth);
+    if (blockState.state && blockState.borderActive) {
+      synthParams.current[blockState.id % 4].value = Math.random();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blockState]);
