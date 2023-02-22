@@ -13,57 +13,57 @@ const App = () => {
   const [currentRow, setCurrentRow] = useState([true, false, false, false]);
   const [gridState, setGridState] = useState([
     [
-      { state: false, id: 0, note: "G3", borderActive: true },
-      { state: false, id: 1, note: "F3", borderActive: true },
-      { state: false, id: 2, note: "E3", borderActive: true },
+      { state: false, id: 0, note: "C3", borderActive: true },
+      { state: false, id: 1, note: "C3", borderActive: true },
+      { state: false, id: 2, note: "C3", borderActive: true },
       { state: false, id: 3, note: "C3", borderActive: true },
     ],
     [
-      { state: false, id: 4, note: "G3", borderActive: false },
-      { state: false, id: 5, note: "F3", borderActive: false },
-      { state: false, id: 6, note: "E3", borderActive: false },
+      { state: false, id: 4, note: "C3", borderActive: false },
+      { state: false, id: 5, note: "C3", borderActive: false },
+      { state: false, id: 6, note: "C3", borderActive: false },
       { state: false, id: 7, note: "C3", borderActive: false },
     ],
     [
-      { state: false, id: 8, note: "G3", borderActive: false },
-      { state: false, id: 9, note: "F3", borderActive: false },
-      { state: false, id: 10, note: "E3", borderActive: false },
+      { state: false, id: 8, note: "C3", borderActive: false },
+      { state: false, id: 9, note: "C3", borderActive: false },
+      { state: false, id: 10, note: "C3", borderActive: false },
       { state: false, id: 11, note: "C3", borderActive: false },
     ],
     [
-      { state: false, id: 12, note: "G3", borderActive: false },
-      { state: false, id: 13, note: "F3", borderActive: false },
-      { state: false, id: 14, note: "E3", borderActive: false },
+      { state: false, id: 12, note: "C3", borderActive: false },
+      { state: false, id: 13, note: "C3", borderActive: false },
+      { state: false, id: 14, note: "C3", borderActive: false },
       { state: false, id: 15, note: "C3", borderActive: false },
     ],
     [
-      { state: false, id: 16, note: "G3", borderActive: false },
-      { state: false, id: 17, note: "F3", borderActive: false },
-      { state: false, id: 18, note: "E3", borderActive: false },
+      { state: false, id: 16, note: "C3", borderActive: false },
+      { state: false, id: 17, note: "C3", borderActive: false },
+      { state: false, id: 18, note: "C3", borderActive: false },
       { state: false, id: 19, note: "C3", borderActive: false },
     ],
     [
-      { state: false, id: 20, note: "G3", borderActive: false },
-      { state: false, id: 21, note: "F3", borderActive: false },
-      { state: false, id: 22, note: "E3", borderActive: false },
+      { state: false, id: 20, note: "C3", borderActive: false },
+      { state: false, id: 21, note: "C3", borderActive: false },
+      { state: false, id: 22, note: "C3", borderActive: false },
       { state: false, id: 23, note: "C3", borderActive: false },
     ],
     [
-      { state: false, id: 24, note: "G3", borderActive: false },
-      { state: false, id: 25, note: "F3", borderActive: false },
-      { state: false, id: 26, note: "E3", borderActive: false },
+      { state: false, id: 24, note: "C3", borderActive: false },
+      { state: false, id: 25, note: "C3", borderActive: false },
+      { state: false, id: 26, note: "C3", borderActive: false },
       { state: false, id: 27, note: "C3", borderActive: false },
     ],
     [
-      { state: false, id: 28, note: "G3", borderActive: false },
-      { state: false, id: 29, note: "F3", borderActive: false },
-      { state: false, id: 30, note: "E3", borderActive: false },
+      { state: false, id: 28, note: "C3", borderActive: false },
+      { state: false, id: 29, note: "C3", borderActive: false },
+      { state: false, id: 30, note: "C3", borderActive: false },
       { state: false, id: 31, note: "C3", borderActive: false },
     ],
   ]);
 
   const [volume, setVolume] = useState(0.5);
-  const [tempo, setTempo] = useState(70);
+  const [tempo, setTempo] = useState(250);
   const [quality, setQuality] = useState(2);
 
   let context = useRef(new AudioContext());
@@ -116,7 +116,7 @@ const App = () => {
           return newState;
         });
       }
-    }, 250);
+    }, tempo);
     // clearing interval
     return () => clearInterval(timer);
   });
@@ -145,6 +145,12 @@ const App = () => {
       await context.current.suspend().then(() => setRunning(false));
     } else {
       await context.current.resume().then(() => setRunning(true));
+      //setup all default params
+      // noteParams.current[0].value = 195;
+      // noteParams.current[1].value = 174;
+      // noteParams.current[2].value = 164;
+      // noteParams.current[3].value = 130;
+      volumeParam.current.value = volume;
     }
   };
 
@@ -173,7 +179,7 @@ const App = () => {
 
   const updateNote = (note: any) => {
     let row = currentRow.indexOf(true);
-    console.log(row);
+
     noteParams.current[row].value = note.frq;
 
     setGridState((prevState) => {
@@ -243,10 +249,10 @@ const App = () => {
           <h2>Tempo</h2>
           <Slider
             size="small"
-            defaultValue={70}
+            defaultValue={250}
             aria-label="Small"
-            min={60}
-            max={100}
+            min={50}
+            max={250}
             valueLabelDisplay="auto"
             value={tempo}
             onChange={(e) =>
