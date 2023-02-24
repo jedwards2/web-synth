@@ -1,11 +1,13 @@
 import "./App.css";
 import { useState, useEffect, useRef } from "react";
-import { createDevice } from "@rnbo/js";
+import { createDevice, IPatcher } from "@rnbo/js";
 import Grid from "./components/Grid/Grid";
 import NoteSet from "./components/NoteSet/NoteSet";
 import PianoKey from "./components/PianoKey/PianoKey";
 import Slider from "@mui/material/Slider";
 import noteData from "./noteData";
+import play from "./images/play.png";
+import pause from "./images/pause.png";
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -122,9 +124,9 @@ const App = () => {
   });
 
   const audioSetup = async () => {
-    let rawPatcher = await fetch("exports/main.export.json");
+    let rawPatcher = await fetch("/web-synth/exports/main.export.json");
 
-    let patcher = await rawPatcher.json();
+    let patcher: IPatcher = await rawPatcher.json();
 
     const device = await createDevice({ context: context.current, patcher });
     device.node.connect(context.current.destination);
@@ -241,8 +243,8 @@ const App = () => {
         <div className="synth-header">
           <div onClick={onOffSwitch} className="button-div">
             <img
-              src={running ? "images/pause.png" : "images/play.png"}
-              alt="pause"
+              src={running ? pause : play}
+              alt="play pause"
               className="buttonImg"
             ></img>
           </div>
